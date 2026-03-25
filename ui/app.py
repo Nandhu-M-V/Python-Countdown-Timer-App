@@ -194,10 +194,13 @@ class TimerApp(ctk.CTk):
         grow()
 
     def play_sound(self):
-        threading.Thread(
-            target=lambda: os.system("paplay /usr/share/sounds/freedesktop/stereo/complete.oga"),
-            daemon=True
-        ).start()
+        def beep():
+            if os.system("which paplay > /dev/null 2>&1") == 0:
+                os.system("paplay /usr/share/sounds/freedesktop/stereo/complete.oga")
+            else:
+                print("\a")
+
+        threading.Thread(target=beep, daemon=True).start()
 
     def toggle_theme(self):
         self.dark = not self.dark
