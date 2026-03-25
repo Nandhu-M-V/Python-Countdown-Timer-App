@@ -1,0 +1,22 @@
+{
+  "python.defaultInterpreterPath": ".venv/bin/python",
+
+  "editor.formatOnSave": true,
+
+  "editor.codeActionsOnSave": {
+    "source.organizeImports": "explicit"
+  },
+
+  "python.formatting.provider": "black",
+
+  "python.analysis.typeCheckingMode": "basic",
+
+  "python.analysis.autoImportCompletions": true,
+  "python.linting.enabled": true,
+  "python.linting.ruffEnabled": true,
+
+  "files.exclude": {
+    "**/__pycache__": true,
+    "**/.venv": true
+  }
+}
