@@ -1,18 +1,17 @@
 class CountdownTimer:
     def __init__(self, total_time: int):
-        self.total_time = total_time
-        self.remaining = total_time
+        self.total_time = max(0, total_time)
+        self.remaining = self.total_time
         self.running = False
 
     def set_time(self, seconds: int):
         self.total_time = max(0, seconds)
         self.remaining = self.total_time
+        self.running = False
 
     def start(self):
-        if self.total_time <= 0:
-            return
-        self.remaining = self.total_time
-        self.running = True
+        if self.total_time > 0:
+            self.running = True
 
     def pause(self):
         self.running = False
@@ -21,16 +20,19 @@ class CountdownTimer:
         if self.remaining > 0:
             self.running = True
 
-    def tick(self):
-        if not self.running:
-            return None
+    def reset(self):
+        self.remaining = self.total_time
+        self.running = False
 
-        if self.remaining > 0:
+    def tick(self):
+        if self.running and self.remaining > 0:
             self.remaining -= 1
-            return self.remaining
-        else:
-            self.running = False
-            return "done"
+
+            if self.remaining == 0:
+                self.running = False
+                return "done"
+
+        return self.remaining
 
     def get_progress(self):
         if self.total_time == 0:
