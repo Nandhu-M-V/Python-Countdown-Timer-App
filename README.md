@@ -15,17 +15,6 @@ A modern, lightweight countdown timer built with Python 3.12.3 on Ubuntu, featur
 
 ---
 
-## Demo
-
-```bash
-00:10:00 -> Countdown starts...
-00:09:59
-00:09:58
-...
-```
-
----
-
 ## Project Structure
 
 ```
