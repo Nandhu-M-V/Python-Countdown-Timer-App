@@ -1,6 +1,8 @@
-import customtkinter as ctk
-import threading
 import os
+import threading
+
+import customtkinter as ctk
+
 from logic.timer import CountdownTimer
 
 
@@ -50,7 +52,7 @@ class CircularProgress(ctk.CTkCanvas):
             start=90,
             extent=-angle,
             style="arc",
-            outline="#9dff00",
+            outline="#fffb00",
             width=10,
         )
 
@@ -60,7 +62,7 @@ class TimerApp(ctk.CTk):
         super().__init__()
 
         self.title("Timer")
-        self.geometry("400x500")
+        self.geometry("300x450")
 
         ctk.set_appearance_mode("dark")
         self.dark = True
@@ -69,7 +71,7 @@ class TimerApp(ctk.CTk):
         self.done_played = False
 
         # --- UI ---
-        self.progress = CircularProgress(self, 200)
+        self.progress = CircularProgress(self, 150)
         self.progress.pack(pady=20)
 
         self.input_frame = ctk.CTkFrame(self)
@@ -103,6 +105,7 @@ class TimerApp(ctk.CTk):
 
         self.after(200, self.update_loop)
 
+    # strting and pausing the timer
     def toggle_timer(self):
         if not self.timer.running and self.timer.remaining == self.timer.total_time:
             try:
@@ -127,6 +130,7 @@ class TimerApp(ctk.CTk):
             self.timer.resume()
             self.start_btn.configure(text="Pause")
 
+    # resetin the timer
     def stop_timer(self):
         self.timer.reset()
         self.done_played = False
@@ -136,13 +140,20 @@ class TimerApp(ctk.CTk):
 
         self.start_btn.configure(text="Start")
 
+    # main running timer loop
     def update_loop(self):
         result = self.timer.tick()
 
         if result == "done":
             if not self.done_played:
+
+                self.timer.reset()
+                self.label.configure(text="00:00")
+
+                self.start_btn.configure(text="Start")
                 self.play_sound()
                 self.done_played = True
+
         else:
             mins = result // 60
             secs = result % 60
